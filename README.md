@@ -1,5 +1,7 @@
 # qr-tool
 
+[![npm version](https://img.shields.io/npm/v/qr-tool.svg)](https://www.npmjs.com/package/qr-tool) [![license](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
+
 CLI dan library Node.js untuk menghasilkan (generate) dan memindai (scan) QR code. Mendukung teks/link, WiFi, kontak (vCard), lokasi, email, SMS, telepon, dan event kalender. Fitur tambahan: warna kustom dan pengaturan error correction level.
 
 ## Fitur
@@ -24,7 +26,15 @@ Pastikan Node.js dan npm sudah terpasang.
 Format umum:
 node bin/cli.js <perintah> [argumen] [opsi]
 
-Contoh-perintah:
+Contoh-perintah (flag sesuai implementasi di bin/cli.js):
+
+### Opsi Umum (semua perintah)
+- -o, --output <path>        Path file output (default: `qrcode.png`)
+- -w, --width <number>       Ukuran QR code dalam piksel (default: `300`)
+- -t, --terminal             Tampilkan QR langsung di terminal, tanpa menyimpan file
+- --dark <color>             Warna QR (foreground), format hex (default: `#000000`)
+- --light <color>            Warna background, format hex (default: `#ffffff`)
+- --ecl <level>              Error correction level: `L` / `M` / `Q` / `H` (default: `M`)
 
 ### 1) Generate teks / link
 node bin/cli.js generate "https://github.com" -o qrcode.png
@@ -36,10 +46,10 @@ node bin/cli.js generate "https://github.com" --terminal
 node bin/cli.js generate "https://github.com" -o colored.png --dark "#1a73e8" --light "#ffffff" --ecl H
 
 ### 3) WiFi
-node bin/cli.js wifi "NamaWifi" "password123" -o wifi.png
+node bin/cli.js wifi "NamaWifi" "password123" -o wifi.png --encryption WPA --hidden
 
 ### 4) Kontak (vCard)
-node bin/cli.js contact "Budi" "08123456789" -e budi@email.com -o kontak.png
+node bin/cli.js contact "Budi" "08123456789" -e budi@email.com --org "Perusahaan" -a "Jalan 1" -o kontak.png
 
 ### 5) Lokasi
 node bin/cli.js location -6.2088 106.8456 -o lokasi.png
@@ -54,20 +64,20 @@ node bin/cli.js sms "08123456789" -m "Halo!" -o sms.png
 node bin/cli.js phone "08123456789" -o telepon.png
 
 ### 9) Event Kalender
-node bin/cli.js event "Meeting Tim" "2026-07-01T10:00:00" -e "2026-07-01T11:00:00" -l "Kantor" -o event.png
+node bin/cli.js event "Meeting Tim" "2026-07-01T10:00:00" -e "2026-07-01T11:00:00" -l "Kantor" -d "Rapat bulanan" -o event.png
 
 ### 10) Scan QR Code
 node bin/cli.js scan qrcode.png
 
-## Opsi Umum
-- -o, --output: Path file hasil (default: qrcode.png)  
-- -w, --width: Ukuran QR dalam piksel (default: 300)  
-- --terminal: Tampilkan QR di terminal tanpa menyimpan file  
-- --dark: Warna foreground (hex), default `#000000`  
-- --light: Warna background (hex), default `#ffffff`  
-- --ecl: Error correction level `L` / `M` / `Q` / `H` (default `M`)  
+## Contoh Output (preview)
+Contoh output ketika generate berhasil:
 
-> Catatan: Nama opsi (mis. `--dark`, `--light`, `--ecl`) sesuai implementasi CLI di `bin/cli.js`. Jika berbeda, sesuaikan flag pada contoh di atas.
+✅ QR code berhasil dibuat: /full/path/to/qrcode.png
+
+Contoh output ketika scan:
+
+✅ Hasil scan:
+{"type":"text","data":"https://github.com"}
 
 ## Penggunaan sebagai Library (Node.js)
 Contoh penggunaan dalam kode:
