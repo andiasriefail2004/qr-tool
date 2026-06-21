@@ -1,76 +1,76 @@
 # qr-tool
 
-CLI dan library Node.js untuk menghasilkan (generate) dan memindai (scan) QR code. Mendukung teks/link, WiFi, kontak (vCard), lokasi, email, SMS, telepon, dan event kalender. Fitur tambahan: warna kus[...]
+A CLI and Node.js library for generating and scanning QR codes. Supports text/links, WiFi, contacts (vCard), locations, emails, SMS, phone numbers, and calendar events. Additional features: custom colors, error correction levels, and terminal display.
 
-## Fitur
-- Generate QR untuk: teks, URL, WiFi, kontak (vCard), lokasi (lat/lon), email, SMS, telepon, event kalender (ICS).
-- Opsi warna foreground/background.
-- Pengaturan ukuran (pixel) dan error correction level (L/M/Q/H).
-- Scan QR dari file gambar.
-- Bisa dipakai sebagai CLI maupun library.
+## Features
+- Generate QR codes for: text, URLs, WiFi, contacts (vCard), locations (lat/lon), email, SMS, phone numbers, and calendar events (ICS).
+- Foreground/background color options.
+- Size settings (pixels) and error correction levels (L/M/Q/H).
+- Scan QR codes from image files.
+- Can be used as both CLI and library.
 
-## Instalasi
-Pastikan Node.js dan npm sudah terpasang.
+## Installation
+Make sure Node.js and npm are installed.
 
-1. Clone repo:
+1. Clone the repository:
    git clone https://github.com/andiasriefail2004/qr-tool.git
-2. Masuk ke folder proyek:
+2. Navigate to the project folder:
    cd qr-tool
-3. Install dependensi:
+3. Install dependencies:
    npm install
 
-## Penggunaan CLI
+## CLI Usage
 
-Format umum:
-node bin/cli.js <perintah> [argumen] [opsi]
+General format:
+node bin/cli.js <command> [arguments] [options]
 
-Contoh-perintah:
+Example commands:
 
-### 1) Generate teks / link
+### 1) Generate text / link
 node bin/cli.js generate "https://github.com" -o qrcode.png
 
-Tampilkan di terminal tanpa menyimpan:
+Display in terminal without saving:
 node bin/cli.js generate "https://github.com" --terminal
 
-### 2) Custom warna & error correction
+### 2) Custom colors & error correction
 node bin/cli.js generate "https://github.com" -o colored.png --dark "#1a73e8" --light "#ffffff" --ecl H
 
 ### 3) WiFi
-node bin/cli.js wifi "NamaWifi" "password123" -o wifi.png
+node bin/cli.js wifi "WiFiName" "password123" -o wifi.png
 
-### 4) Kontak (vCard)
-node bin/cli.js contact "Budi" "08123456789" -e budi@email.com -o kontak.png
+### 4) Contact (vCard)
+node bin/cli.js contact "John" "08123456789" -e john@email.com -o contact.png
 
-### 5) Lokasi
-node bin/cli.js location -6.2088 106.8456 -o lokasi.png
+### 5) Location
+node bin/cli.js location -6.2088 106.8456 -o location.png
 
 ### 6) Email
-node bin/cli.js email "budi@email.com" -s "Halo" -b "Apa kabar?" -o email.png
+node bin/cli.js email "john@email.com" -s "Hello" -b "How are you?" -o email.png
 
 ### 7) SMS
-node bin/cli.js sms "08123456789" -m "Halo!" -o sms.png
+node bin/cli.js sms "08123456789" -m "Hello!" -o sms.png
 
-### 8) Telepon
-node bin/cli.js phone "08123456789" -o telepon.png
+### 8) Phone
+node bin/cli.js phone "08123456789" -o phone.png
 
-### 9) Event Kalender
-node bin/cli.js event "Meeting Tim" "2026-07-01T10:00:00" -e "2026-07-01T11:00:00" -l "Kantor" -o event.png
+### 9) Calendar Event
+node bin/cli.js event "Team Meeting" "2026-07-01T10:00:00" -e "2026-07-01T11:00:00" -l "Office" -o event.png
 
 ### 10) Scan QR Code
 node bin/cli.js scan qrcode.png
 
-## Opsi Umum
-- -o, --output: Path file hasil (default: qrcode.png)  
-- -w, --width: Ukuran QR dalam piksel (default: 300)  
-- --terminal: Tampilkan QR di terminal tanpa menyimpan file  
-- `--dark <color>` — warna QR code (foreground), format hex (default: `#000000`)
-- `--light <color>` — warna background, format hex (default: `#ffffff`)
-- `--ecl <level>` — error correction level: `L` (rendah), `M` (sedang), `Q` (tinggi), `H` (sangat tinggi) (default: `M`)
+## Common Options
+- -o, --output: Output file path (default: qrcode.png)  
+- -w, --width: QR code size in pixels (default: 300)  
+- --terminal: Display QR code in terminal without saving file  
+- `--dark <color>` — QR code color (foreground), hex format (default: `#000000`)
+- `--light <color>` — background color, hex format (default: `#ffffff`)
+- `--ecl <level>` — error correction level: `L` (low), `M` (medium), `Q` (high), `H` (very high) (default: `M`)
 
-> Catatan: Nama opsi (mis. `--dark`, `--light`, `--ecl`) sesuai implementasi CLI di `bin/cli.js`. Jika berbeda, sesuaikan flag pada contoh di atas.
+> Note: Option names (e.g., `--dark`, `--light`, `--ecl`) follow the implementation in `bin/cli.js`. If they differ, adjust the flags in the examples above.
 
-## Penggunaan sebagai Library (Node.js)
-Contoh penggunaan dalam kode:
+## Usage as a Library (Node.js)
+Example usage in code:
 ```javascript
 const { generateQR, scanQR } = require('qr-tool');
 
@@ -84,15 +84,15 @@ generateQR('https://github.com', 'output.png', {
 
 // scanQR(pathOrBuffer)
 scanQR('output.png').then(result => {
-  console.log('Hasil scan:', result);
+  console.log('Scan result:', result);
 }).catch(err => console.error(err));
 ```
 
-Sesuaikan API (nama fungsi/opsi) dengan implementasi di paket jika berbeda.
+Adjust the API (function names/options) according to the implementation in the package if they differ.
 
-## Pengembangan
-- Jalankan unit test (jika ada) dan periksa `bin/cli.js` untuk konfirmasi flag dan opsi.
-- Untuk kontribusi: buat branch baru, commit perubahan, dan buka PR.
+## Development
+- Run unit tests (if available) and check `bin/cli.js` to confirm flags and options.
+- For contributions: create a new branch, commit changes, and open a PR.
 
-## Lisensi
+## License
 ISC
