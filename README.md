@@ -1,6 +1,6 @@
 # qr-tool
 
-CLI dan library Node.js untuk menghasilkan (generate) dan memindai (scan) QR code. Mendukung teks/link, WiFi, kontak (vCard), lokasi, email, SMS, telepon, dan event kalender. Fitur tambahan: warna kustom dan pengaturan error correction level.
+CLI dan library Node.js untuk menghasilkan (generate) dan memindai (scan) QR code. Mendukung teks/link, WiFi, kontak (vCard), lokasi, email, SMS, telepon, dan event kalender. Fitur tambahan: warna kus[...]
 
 ## Fitur
 - Generate QR untuk: teks, URL, WiFi, kontak (vCard), lokasi (lat/lon), email, SMS, telepon, event kalender (ICS).
@@ -63,9 +63,9 @@ node bin/cli.js scan qrcode.png
 - -o, --output: Path file hasil (default: qrcode.png)  
 - -w, --width: Ukuran QR dalam piksel (default: 300)  
 - --terminal: Tampilkan QR di terminal tanpa menyimpan file  
-- --dark: Warna foreground (hex), default `#000000`  
-- --light: Warna background (hex), default `#ffffff`  
-- --ecl: Error correction level `L` / `M` / `Q` / `H` (default `M`)  
+- `--dark <color>` — warna QR code (foreground), format hex (default: `#000000`)
+- `--light <color>` — warna background, format hex (default: `#ffffff`)
+- `--ecl <level>` — error correction level: `L` (rendah), `M` (sedang), `Q` (tinggi), `H` (sangat tinggi) (default: `M`)
 
 > Catatan: Nama opsi (mis. `--dark`, `--light`, `--ecl`) sesuai implementasi CLI di `bin/cli.js`. Jika berbeda, sesuaikan flag pada contoh di atas.
 
