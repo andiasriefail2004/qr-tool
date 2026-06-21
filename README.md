@@ -1,69 +1,98 @@
 # qr-tool
 
-CLI dan library Node.js untuk generate dan scan QR code — mendukung teks, link, WiFi, kontak (vCard), lokasi, email, SMS, telepon, dan event kalender, dengan opsi warna custom dan error correction level.
+CLI dan library Node.js untuk menghasilkan (generate) dan memindai (scan) QR code. Mendukung teks/link, WiFi, kontak (vCard), lokasi, email, SMS, telepon, dan event kalender. Fitur tambahan: warna kustom dan pengaturan error correction level.
+
+## Fitur
+- Generate QR untuk: teks, URL, WiFi, kontak (vCard), lokasi (lat/lon), email, SMS, telepon, event kalender (ICS).
+- Opsi warna foreground/background.
+- Pengaturan ukuran (pixel) dan error correction level (L/M/Q/H).
+- Scan QR dari file gambar.
+- Bisa dipakai sebagai CLI maupun library.
 
 ## Instalasi
+Pastikan Node.js dan npm sudah terpasang.
 
-git clone https://github.com/andiasriefail2004/qr-tool.git
-
-mkdir qr-tool
-
-cd qr-tool
-
-npm install
+1. Clone repo:
+   git clone https://github.com/andiasriefail2004/qr-tool.git
+2. Masuk ke folder proyek:
+   cd qr-tool
+3. Install dependensi:
+   npm install
 
 ## Penggunaan CLI
 
-### Teks / Link
-node bin/cli.js generate 
+Format umum:
+node bin/cli.js <perintah> [argumen] [opsi]
 
-"https://github.com" -o qrcode.png
+Contoh-perintah:
 
-node bin/cli.js generate 
+### 1) Generate teks / link
+node bin/cli.js generate "https://github.com" -o qrcode.png
 
-"https://github.com" -t
+Tampilkan di terminal tanpa menyimpan:
+node bin/cli.js generate "https://github.com" --terminal
 
-### Custom warna & error correction
+### 2) Custom warna & error correction
 node bin/cli.js generate "https://github.com" -o colored.png --dark "#1a73e8" --light "#ffffff" --ecl H
 
-### WiFi
+### 3) WiFi
 node bin/cli.js wifi "NamaWifi" "password123" -o wifi.png
 
-### Kontak
+### 4) Kontak (vCard)
 node bin/cli.js contact "Budi" "08123456789" -e budi@email.com -o kontak.png
 
-### Lokasi
+### 5) Lokasi
 node bin/cli.js location -6.2088 106.8456 -o lokasi.png
 
-### Email
+### 6) Email
 node bin/cli.js email "budi@email.com" -s "Halo" -b "Apa kabar?" -o email.png
 
-### SMS
+### 7) SMS
 node bin/cli.js sms "08123456789" -m "Halo!" -o sms.png
 
-### Telepon
+### 8) Telepon
 node bin/cli.js phone "08123456789" -o telepon.png
 
-### Event Kalender
+### 9) Event Kalender
 node bin/cli.js event "Meeting Tim" "2026-07-01T10:00:00" -e "2026-07-01T11:00:00" -l "Kantor" -o event.png
 
-### Scan QR Code
+### 10) Scan QR Code
 node bin/cli.js scan qrcode.png
 
-### Opsi Umum
-- output: path file hasil (default qrcode.png)
-- width: ukuran QR dalam piksel (default 300)
-- terminal: tampilkan QR di terminal tanpa simpan file
-- dark: warna QR/foreground hex (default #000000)
-- light: warna background hex (default #ffffff)
-- ecl: error correction level L/M/Q/H (default M)
+## Opsi Umum
+- -o, --output: Path file hasil (default: qrcode.png)  
+- -w, --width: Ukuran QR dalam piksel (default: 300)  
+- --terminal: Tampilkan QR di terminal tanpa menyimpan file  
+- --dark: Warna foreground (hex), default `#000000`  
+- --light: Warna background (hex), default `#ffffff`  
+- --ecl: Error correction level `L` / `M` / `Q` / `H` (default `M`)  
 
-## Penggunaan sebagai Library
+> Catatan: Nama opsi (mis. `--dark`, `--light`, `--ecl`) sesuai implementasi CLI di `bin/cli.js`. Jika berbeda, sesuaikan flag pada contoh di atas.
 
+## Penggunaan sebagai Library (Node.js)
+Contoh penggunaan dalam kode:
+```javascript
 const { generateQR, scanQR } = require('qr-tool');
-generateQR('https://github.com', 'output.png', { dark: '#1a73e8', errorCorrectionLevel: 'H' });
-scanQR('output.png');
+
+// generateQR(content, outputPath, options)
+generateQR('https://github.com', 'output.png', {
+  width: 400,
+  dark: '#1a73e8',
+  light: '#ffffff',
+  errorCorrectionLevel: 'H'
+});
+
+// scanQR(pathOrBuffer)
+scanQR('output.png').then(result => {
+  console.log('Hasil scan:', result);
+}).catch(err => console.error(err));
+```
+
+Sesuaikan API (nama fungsi/opsi) dengan implementasi di paket jika berbeda.
+
+## Pengembangan
+- Jalankan unit test (jika ada) dan periksa `bin/cli.js` untuk konfirmasi flag dan opsi.
+- Untuk kontribusi: buat branch baru, commit perubahan, dan buka PR.
 
 ## Lisensi
-
 ISC
