@@ -5,14 +5,19 @@ CLI dan library Node.js untuk generate dan scan QR code — mendukung teks, link
 ## Instalasi
 
 git clone https://github.com/andiasriefail2004/qr-tool.git
+
 cd qr-tool
+
 npm install
 
 ## Penggunaan CLI
 
 ### Teks / Link
-node bin/cli.js generate "https://github.com" -o qrcode.png
-node bin/cli.js generate "https://github.com" -t
+node bin/cli.js generate 
+"https://github.com" -o qrcode.png
+
+node bin/cli.js generate 
+"https://github.com" -t
 
 ### Custom warna & error correction
 node bin/cli.js generate "https://github.com" -o colored.png --dark "#1a73e8" --light "#ffffff" --ecl H
