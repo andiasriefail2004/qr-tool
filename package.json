@@ -1,7 +1,7 @@
 {
-  "name": "qr-tool",
+  "name": "qr-tools-generate-id",
   "version": "1.0.0",
-  "description": "CLI dan library Node.js sederhana untuk generate dan scan QR code",
+  "description": "CLI dan library Node.js untuk generate dan scan QR code — mendukung teks, link, WiFi, kontak (vCard), lokasi, email, SMS, telepon, dan event kalender, dengan opsi warna custom dan error correction level.",
   "main": "index.js",
   "bin": {
     "qr-tool": "./bin/cli.js"
@@ -9,10 +9,33 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["qrcode", "qr", "cli", "generator", "scanner"],
-  "author": "",
+  "keywords": [
+    "qrcode",
+    "qr",
+    "qr-code",
+    "generator",
+    "scanner",
+    "cli",
+    "vcard",
+    "wifi-qr",
+    "contact-qr",
+    "barcode",
+    "indonesia"
+  ],
+  "author": "andiasriefail2004",
   "license": "ISC",
   "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andiasriefail2004/qr-tool.git"
+  },
+  "homepage": "https://github.com/andiasriefail2004/qr-tool#readme",
+  "bugs": {
+    "url": "https://github.com/andiasriefail2004/qr-tool/issues"
+  },
+  "engines": {
+    "node": ">=14"
+  },
   "dependencies": {
     "commander": "^15.0.0",
     "jimp": "^1.6.1",

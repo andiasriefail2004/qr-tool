@@ -6,6 +6,7 @@ async function generateQR(text, outputPath, options = {}) {
   const opts = {
     width: options.width || 300,
     margin: options.margin || 2,
+    errorCorrectionLevel: options.errorCorrectionLevel || 'M',
     color: {
       dark: options.dark || '#000000',
       light: options.light || '#ffffff',
@@ -15,8 +16,12 @@ async function generateQR(text, outputPath, options = {}) {
   return outputPath;
 }
 
-async function generateQRTerminal(text) {
-  const result = await QRCode.toString(text, { type: 'terminal' });
+async function generateQRTerminal(text, options = {}) {
+  const opts = {
+    type: 'terminal',
+    errorCorrectionLevel: options.errorCorrectionLevel || 'M',
+  };
+  const result = await QRCode.toString(text, opts);
   return result;
 }
 
@@ -65,7 +70,6 @@ function formatPhone({ phone }) {
 }
 
 function formatEvent({ title, start, end, location = '', description = '' }) {
-  // start/end format: YYYYMMDDTHHmmssZ atau objek Date
   const fmt = (d) => {
     if (typeof d === 'string') return d;
     return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';

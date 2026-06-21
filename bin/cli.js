@@ -20,17 +20,23 @@ const program = new Command();
 program
   .name('qr-tool')
   .description('CLI untuk generate dan scan QR code (teks, WiFi, kontak, lokasi, email, SMS, telepon, event)')
-  .version('1.1.0');
+  .version('1.2.0');
 
 // Helper umum untuk output (terminal atau file)
 async function output(text, options) {
+  const ecl = (options.ecl || 'M').toUpperCase();
   if (options.terminal) {
-    const result = await generateQRTerminal(text);
+    const result = await generateQRTerminal(text, { errorCorrectionLevel: ecl });
     console.log(result);
     return;
   }
   const outputPath = path.resolve(options.output);
-  await generateQR(text, outputPath, { width: parseInt(options.width, 10) });
+  await generateQR(text, outputPath, {
+    width: parseInt(options.width, 10),
+    dark: options.dark,
+    light: options.light,
+    errorCorrectionLevel: ecl,
+  });
   console.log(`✅ QR code berhasil dibuat: ${outputPath}`);
 }
 
@@ -38,7 +44,10 @@ function addCommonOptions(cmd) {
   return cmd
     .option('-o, --output <path>', 'path file output', 'qrcode.png')
     .option('-w, --width <number>', 'ukuran QR code (px)', '300')
-    .option('-t, --terminal', 'tampilkan QR langsung di terminal, tanpa simpan file');
+    .option('-t, --terminal', 'tampilkan QR langsung di terminal, tanpa simpan file')
+    .option('--dark <color>', 'warna QR (foreground), format hex', '#000000')
+    .option('--light <color>', 'warna background, format hex', '#ffffff')
+    .option('--ecl <level>', 'error correction level: L (rendah), M (sedang), Q (tinggi), H (sangat tinggi)', 'M');
 }
 
 // ---------- generate teks/link ----------
