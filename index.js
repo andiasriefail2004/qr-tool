@@ -37,17 +37,33 @@ async function scanQR(imagePath) {
 
 // ---------- Formatter untuk tipe data khusus ----------
 
+function escapeWifiField(value) {
+  // Format WIFI QR (konvensi ZXing) mewajibkan escape \, ;, ,, :, dan "
+  // di dalam SSID/password agar tidak dianggap sebagai pemisah field.
+  return String(value).replace(/([\\;,:"])/g, '\\$1');
+}
+
 function formatWifi({ ssid, password, encryption = 'WPA', hidden = false }) {
-  return `WIFI:T:${encryption};S:${ssid};P:${password};H:${hidden ? 'true' : 'false'};;`;
+  return `WIFI:T:${encryption};S:${escapeWifiField(ssid)};P:${escapeWifiField(password)};H:${hidden ? 'true' : 'false'};;`;
+}
+
+function escapeVCardField(value) {
+  // vCard 3.0 (RFC 2426) mewajibkan escape \, lalu ;, ,, dan newline.
+  // Urutan penting: backslash harus di-escape duluan supaya backslash
+  // hasil escape ;/, tidak ikut di-escape ulang.
+  return String(value)
+    .replace(/\\/g, '\\\\')
+    .replace(/([;,])/g, '\\$1')
+    .replace(/\n/g, '\\n');
 }
 
 function formatContact({ name, phone, email, org, address }) {
   let vcard = 'BEGIN:VCARD\nVERSION:3.0\n';
-  vcard += `FN:${name}\n`;
-  if (phone) vcard += `TEL:${phone}\n`;
-  if (email) vcard += `EMAIL:${email}\n`;
-  if (org) vcard += `ORG:${org}\n`;
-  if (address) vcard += `ADR:;;${address};;;;\n`;
+  vcard += `FN:${escapeVCardField(name)}\n`;
+  if (phone) vcard += `TEL:${escapeVCardField(phone)}\n`;
+  if (email) vcard += `EMAIL:${escapeVCardField(email)}\n`;
+  if (org) vcard += `ORG:${escapeVCardField(org)}\n`;
+  if (address) vcard += `ADR:;;${escapeVCardField(address)};;;;\n`;
   vcard += 'END:VCARD';
   return vcard;
 }
