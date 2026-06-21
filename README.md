@@ -14,9 +14,11 @@ npm install
 
 ### Teks / Link
 node bin/cli.js generate 
+
 "https://github.com" -o qrcode.png
 
 node bin/cli.js generate 
+
 "https://github.com" -t
 
 ### Custom warna & error correction
