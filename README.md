@@ -6,6 +6,8 @@ CLI dan library Node.js untuk generate dan scan QR code — mendukung teks, link
 
 git clone https://github.com/andiasriefail2004/qr-tool.git
 
+mkdir qr-tool
+
 cd qr-tool
 
 npm install
