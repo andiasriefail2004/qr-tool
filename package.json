@@ -1,0 +1,22 @@
+{
+  "name": "qr-tool",
+  "version": "1.0.0",
+  "description": "CLI dan library Node.js sederhana untuk generate dan scan QR code",
+  "main": "index.js",
+  "bin": {
+    "qr-tool": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["qrcode", "qr", "cli", "generator", "scanner"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "commander": "^15.0.0",
+    "jimp": "^1.6.1",
+    "jsqr": "^1.4.0",
+    "qrcode": "^1.5.4"
+  }
+}
